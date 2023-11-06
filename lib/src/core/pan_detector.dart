@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:quiver/core.dart';
 
 /// A class representing the current state of a [PanAwareBuilder].
 ///
@@ -37,7 +36,7 @@ class PanState {
       );
 
   @override
-  int get hashCode => hash3(distance, isPanning, wasFlung);
+  int get hashCode => Object.hash(distance, isPanning, wasFlung);
 
   @override
   bool operator ==(Object other) {
