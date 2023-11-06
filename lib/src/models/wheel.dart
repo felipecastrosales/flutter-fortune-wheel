@@ -18,6 +18,9 @@ class Wheel extends Equatable {
     this.textStyleTitleSpinButton,
     this.arrowView,
     this.colorIndicator,
+    this.hasArrow = false,
+    required this.gradientColors,
+    required this.centerIcon,
   })  : assert(items.length >= 2),
         assert(rotationCount >= 0);
 
@@ -61,6 +64,14 @@ class Wheel extends Equatable {
   ///Color arrow
   final Color? colorIndicator;
 
+  /// List of colors for the wheel
+  final List<Color> gradientColors;
+
+  /// Center icon for the wheel
+  final Widget centerIcon;
+
+  final bool hasArrow;
+
   Wheel copyWith({
     List<Fortune>? items,
     Duration? duration,
@@ -74,6 +85,9 @@ class Wheel extends Equatable {
     TextStyle? textStyleTitleSpinButton,
     Widget? arrowView,
     Color? colorIndicator,
+    List<Color>? gradientColors,
+    Widget? centerIcon,
+    bool? hasArrow,
   }) {
     return Wheel(
       items: items ?? this.items,
@@ -89,6 +103,9 @@ class Wheel extends Equatable {
           textStyleTitleSpinButton ?? this.textStyleTitleSpinButton,
       arrowView: arrowView ?? this.arrowView,
       colorIndicator: colorIndicator ?? this.colorIndicator,
+      gradientColors: gradientColors ?? this.gradientColors,
+      centerIcon: centerIcon ?? this.centerIcon,
+      hasArrow: hasArrow ?? this.hasArrow,
     );
   }
 
@@ -106,5 +123,8 @@ class Wheel extends Equatable {
         textStyleTitleSpinButton,
         arrowView,
         colorIndicator,
+        gradientColors,
+        centerIcon,
+        hasArrow,
       ];
 }

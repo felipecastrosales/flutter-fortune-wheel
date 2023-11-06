@@ -32,6 +32,8 @@ class _FortuneWheelBackgroundState extends State<FortuneWheelBackground>
   late Animation<double> _rotation;
   final Completer<void> _creatingCompleter = Completer<void>();
 
+  void listener() => setState(() {});
+
   @override
   void initState() {
     _painterController =
@@ -48,9 +50,7 @@ class _FortuneWheelBackgroundState extends State<FortuneWheelBackground>
         }
       }
     });
-    _controller.addListener(() {
-      setState(() {});
-    });
+    _controller.addListener(listener);
     _controller.forward();
     super.initState();
   }
@@ -60,6 +60,7 @@ class _FortuneWheelBackgroundState extends State<FortuneWheelBackground>
     if (widget.painterController == null) {
       _painterController.dispose();
     }
+    _controller.removeListener(listener);
     _controller.dispose();
     _creatingCompleter.complete();
 

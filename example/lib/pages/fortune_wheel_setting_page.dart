@@ -415,6 +415,15 @@ class _FortuneWheelSettingPageState extends State<FortuneWheelSettingPage> {
         },
       ),
       FortuneTemplate(
+        title: 'Random (1- 5)',
+        fortuneValues: Constants.list5Item,
+        onPressed: () {
+          _wheel = _wheel.copyWith(items: Constants.list5Item);
+          _fortuneValuesController.sink.add(true);
+          Navigator.pop(context);
+        },
+      ),
+      FortuneTemplate(
         title: 'Random number (1- 16)',
         fortuneValues: Constants.numbers,
         onPressed: () {

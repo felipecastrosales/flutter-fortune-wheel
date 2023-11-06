@@ -115,6 +115,59 @@ class Constants {
         priority: 1),
   ];
 
+  static final list5Item = <Fortune>[
+    Fortune(
+      id: 1,
+      titleName: 'Japãozin',
+      imageUrl:
+          'https://akamai.sscdn.co/tb/palcomp3-fotos/4/2/9/1/japaozin-df3eb23b-e88c-49a6-9ab9-355c524bc3eb.jpg',
+      backgroundColors: const [
+        Color(0xffBD2003),
+        Color(0xffEDA600),
+      ],
+    ),
+    Fortune(
+      id: 2,
+      titleName: 'Jarly',
+      imageUrl:
+          'https://yt3.googleusercontent.com/ejzL3h46TqjsSwWgiQEuMKQxqaYF3UB3VaLu5sSgcZQJ_89SVrbkqTDcm3wTTtByTraij1VYDA=s900-c-k-c0x00ffffff-no-rj',
+      backgroundColors: const [
+        Color(0xff05788B),
+        Color(0xffF29111),
+      ],
+    ),
+    Fortune(
+      id: 3,
+      titleName: 'Felipe Amorim',
+      imageUrl:
+          'https://i.scdn.co/image/ab6761610000e5ebbd34cd692dd2d03df624daf4',
+      backgroundColors: const [
+        Color(0XFF86C9E4),
+        Color(0XFF1572CF),
+      ],
+    ),
+    Fortune(
+      id: 4,
+      titleName: 'Márcia',
+      imageUrl:
+          'https://yt3.googleusercontent.com/3LTlqGZz6fz3mwt0BLx1BcjXrVwl79Xo5SNGZajO2VpjC7TRGedwPsyXOwni2ELssgqcBISacQ=s900-c-k-c0x00ffffff-no-rj',
+      backgroundColors: const [
+        Color(0XFFD0FB01),
+        Color(0XFFC00FF1),
+      ],
+    ),
+    Fortune(
+      id: 5,
+      titleName: 'Limão com Mel',
+      imageUrl:
+          'https://akamai.sscdn.co/uploadfile/letras/fotos/4/5/5/4/4554e7e9a85fd8a68f5cba0976d3b936.jpg',
+      backgroundColors: const [
+        Color(0XFF01ACFA),
+        Color(0XFFA41E49),
+      ],
+    ),
+  ];
+
   static List<Fortune> numbers160 = List.generate(
     160,
     (index) => Fortune(

@@ -47,20 +47,21 @@ class _MyAppState extends State<MyApp> {
 
   late ConfettiController _confettiController;
 
-  Wheel _wheel = Wheel(
-    // items: Constants.icons2,
-    // items: Constants.liXiNamMoi,
-    items: Constants.list12Item,
-    isSpinByPriority: true,
-    duration: const Duration(seconds: 10),
-  );
+  late Wheel _wheel;
 
   @override
   void initState() {
     super.initState();
     _painterController.playAnimation();
     _confettiController =
-        ConfettiController(duration: const Duration(seconds: 10));
+        ConfettiController(duration: const Duration(seconds: 3));
+    _wheel = Wheel(
+      items: Constants.list5Item,
+      rotationCount: 3,
+      duration: const Duration(seconds: 3),
+      gradientColors: const [Color(0xFF7C111A), Color(0xFFF21D40)],
+      centerIcon: const Icon(Icons.star, color: Colors.white, size: 40),
+    );
   }
 
   @override
@@ -73,6 +74,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    /// for hot-reload works as expected
+    _wheel = Wheel(
+      items: Constants.list5Item,
+      rotationCount: 3,
+      duration: const Duration(seconds: 3),
+      gradientColors: const [Color(0xFF7C111A), Color(0xFFF21D40)],
+      centerIcon: const Icon(Icons.star, color: Colors.white, size: 40),
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFFC3DBF8),
       body: Stack(
@@ -170,7 +180,8 @@ class _MyAppState extends State<MyApp> {
             onChanged: (Fortune item) {
               _resultWheelController.sink.add(item);
             },
-            onResult: _onResult,
+            // onResult: _onResult,
+            onResult: (Fortune fortune) {},
           );
         },
       ),

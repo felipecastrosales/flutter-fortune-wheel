@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 ///A widget indicator, which is arrow spin result
@@ -8,7 +7,7 @@ class ArrowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-      angle: pi / 2,
+      angle: 90,
       child: ClipPath(
         clipper: _ArrowClipper(),
         child: Container(

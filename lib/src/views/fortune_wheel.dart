@@ -4,6 +4,7 @@ import 'package:flutter_fortune_wheel/src/helpers/helpers.dart';
 import 'package:flutter_fortune_wheel/src/models/models.dart';
 import 'package:flutter_fortune_wheel/src/views/arrow_view.dart';
 import 'package:flutter_fortune_wheel/src/views/board_view.dart';
+import 'package:flutter_fortune_wheel/src/views/gradient_widget.dart';
 import '../core/core.dart';
 
 class FortuneWheel extends StatefulWidget {
@@ -57,8 +58,16 @@ class _FortuneWheelState extends State<FortuneWheel>
   ///List of wheel elements prioritized for winning spins
   late List<Fortune> _fortuneValuesByPriority;
 
+  /// List of values for the background of the wheel
+  List<Color> get gradientColors => widget.wheel.gradientColors;
+
+  /// Size of the wheel
   double get wheelSize =>
       widget.wheel.size ?? MediaQuery.of(context).size.shortestSide * 0.8;
+
+  void onTapWheel() => widget.wheel.isSpinByPriority
+      ? _handleSpinByPriorityPressed()
+      : _handleSpinByRandomPressed();
 
   @override
   void initState() {
@@ -83,6 +92,8 @@ class _FortuneWheelState extends State<FortuneWheel>
     final deviceSize = MediaQuery.of(context).size;
     final meanSize = (deviceSize.width + deviceSize.height) / 2;
     final panFactor = 6 / meanSize;
+    const arrowPosition = 90.0;
+
     return PanAwareBuilder(
       physics: CircularPanPhysics(),
       onFling: widget.wheel.isSpinByPriority
@@ -98,40 +109,62 @@ class _FortuneWheelState extends State<FortuneWheel>
               child: BoardView(
                 items: widget.wheel.items,
                 size: wheelSize,
+                onTapWheel: onTapWheel,
               ),
               builder: (context, child) {
                 ///Rotation angle of the wheel
                 final angle = _wheelAnimation.value * _angle;
+
                 if (_wheelAnimationController.isAnimating) {
                   _indexResult = _getIndexFortune(angle + _currentAngle);
                   widget.onChanged.call(widget.wheel.items[_indexResult]);
                 }
-                final rotationAngle =
-                    2 * pi * widget.wheel.rotationCount * _wheelAnimation.value;
+
+                final rotationAngle = 2 *
+                        pi *
+                        widget.wheel.rotationCount *
+                        _wheelAnimation.value +
+                    arrowPosition;
 
                 ///Current angle position of the standing wheel
                 final current = _currentAngle + rotationAngle + panAngle;
+
                 return Stack(
                   alignment: Alignment.center,
                   children: [
-                    Transform.rotate(
-                      angle: angle + current,
-                      child: child,
+                    GradientWidget(
+                      colors: gradientColors,
+                      child: Transform.rotate(
+                        angle: angle + current,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 8,
+                                spreadRadius: 4,
+                              ),
+                            ],
+                          ),
+                          child: child,
+                        ),
+                      ),
                     ),
                     _buildCenterOfWheel(),
-                    _buildButtonSpin(),
                   ],
                 );
               },
             ),
-            SizedBox(
-              height: wheelSize,
-              width: wheelSize,
-              child: Align(
-                alignment: const Alignment(1.08, 0),
-                child: widget.wheel.arrowView ?? const ArrowView(),
+            if (widget.wheel.hasArrow)
+              SizedBox(
+                height: wheelSize,
+                width: wheelSize,
+                child: Align(
+                  alignment: const Alignment(0, 1.08),
+                  child: widget.wheel.arrowView ?? const ArrowView(),
+                ),
               ),
-            ),
           ],
         );
       },
@@ -140,10 +173,19 @@ class _FortuneWheelState extends State<FortuneWheel>
 
   ///UI Wheel center
   Widget _buildCenterOfWheel() {
-    return const CircleAvatar(radius: 16, backgroundColor: Colors.white);
+    return InkWell(
+      onTap: onTapWheel,
+      child: GradientWidget(
+        size: 60,
+        colors: gradientColors,
+        paddingSize: 4,
+        child: widget.wheel.centerIcon,
+      ),
+    );
   }
 
   ///UI Button Spin
+  // ignore: unused_element
   Widget _buildButtonSpin() {
     return Visibility(
       visible: !_wheelAnimationController.isAnimating,
